@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lab-analytics"
+version = "0.1.0"
+description = "FlashDrop Kafka order projection service backed by PostgreSQL"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "aiokafka==0.12.0",
+  "fastapi==0.116.1",
+  "prometheus-client==0.22.1",
+  "asyncpg==0.31.0",
+  "ulid-py==1.1.0",
+  "uvicorn==0.35.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.4.1",
+  "ruff==0.16.5",
+  "pytest-asyncio==1.1.0",
+]
+
+[project.scripts]
+lab-analytics = "lab_analytics.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+asyncio_mode = "auto"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC", "RUF"]
